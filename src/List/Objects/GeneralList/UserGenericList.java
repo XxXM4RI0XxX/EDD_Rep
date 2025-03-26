@@ -1,27 +1,37 @@
-package List.Objects;
+package List.Objects.GeneralList;
 
 import List.Util.ListError;
 import List.Util.Position;
-/// Lista con nodos tipo int
-public class UserIntList {
 
-    private Node head;
+import java.util.ArrayList;
+
+/// Lista con nodos genericos de cualquier tipo
+public class UserGenericList <T> {
+
+    private GenericNode<T> head;
     private final String listName;
     private int maxSize = -1;
 
-    public UserIntList(String listName , Node head, int size){ //Crear lista con tamaño definido
-        this.listName = listName;
+    public UserGenericList(String listName , GenericNode<T> head, int size){ //Crear lista con tamaño definido
+        this.listName = verifyListName(listName);
         this.head = head;
         this.maxSize = size;
     }
 
-    public UserIntList(String listName, Node head){ //Crear lista con tamaño indefinido
-        this.listName = listName;
+    public UserGenericList(String listName, GenericNode<T> head){ //Crear lista con tamaño indefinido
+        this.listName = verifyListName(listName);
         this.head = head;
+    }
+    
+    //Verificar si el nombre de la lista es vacio, y si es vacio, asignar un nombre por defecto
+    private String verifyListName(String listName){
+        if(listName.isBlank())
+            return "DefaultListName";
+        else return listName;
     }
 
     /// MAIN METHODS
-    public void push (Node newNode, Position pos){ //Agregar nodo
+    public void push (GenericNode<T> newNode, Position pos){ //Agregar nodo
         try {
             if (head == null) {
                 head = newNode;
@@ -45,16 +55,17 @@ public class UserIntList {
         }catch (ListError _){}
     }
 
-    public int pop(Position pos){ //Retirar nodo
+    public T pop(Position pos){ //Retirar nodo
 
-        int val;
+        T val;
+
         try {
 
             if (head == null)
                 throw new ListError(maxSize);
 
             if (head.getNextNode() == head) {
-                val = head.getVal();
+                val = head.getValue();
                 head = null;
                 System.out.println("Valor conseguido exitosamente");
                 return val;
@@ -67,32 +78,32 @@ public class UserIntList {
                 case FRONT -> val = popFront();
                 case BACK -> val = popBack();
                 case MIDDLE -> val = popMiddle();
-                default -> val = 0;
+                default -> val = null;
             }
 
             System.out.println("Valor conseguido exitosamente");
         }catch (ListError _){
-            val =0;
+            val = null;
         }
         return val;
     }
 
     /// PUSH METHODS
-    private void pushFront(Node newNode){ //Insertar al frente
-        Node aux = getLastNode(); // Consigue el ultimo nodo
+    private void pushFront(GenericNode<T> newNode){ //Insertar al frente
+        GenericNode<T> aux = getLastNode(); // Consigue el ultimo nodo
         newNode.setNextNode(head); //Asigna al nuevo nodo, la raíz, como siguiente nodo
         head.setPrevNode(newNode); //Asigna a la raíz, el nuevo nodo, como anterior nodo
         newNode.setPrevNode(aux); //Asigna al nuevo nodo, el ultimo nodo, como anterior nodo
         aux.setNextNode(newNode); //Asigna al ultimo nodo, el nuevo nodo, como siguiente nodo
     }
 
-    private void pushMiddle(Node newNode){
+    private void pushMiddle(GenericNode<T> newNode){
 
-        Node aux = head;
+        GenericNode<T> aux = head;
         for (int i = 1; i < listSize()/2 ; i++) { //Ciclo para localizar al nodo medio
             aux = aux.getNextNode();
         }
-        Node nextAux = aux.getNextNode();//Consigue el nodo siguente del nodo medio
+        GenericNode<T> nextAux = aux.getNextNode();//Consigue el nodo siguente del nodo medio
 
         aux.setNextNode(newNode); //Asigna al nodo de en medio, el nuevo nodo, como siguiente nodo
         newNode.setPrevNode(aux); //Asigna al nuevo nodo, el nodo de en medio, como anterior nodo
@@ -101,8 +112,8 @@ public class UserIntList {
 
     }
 
-    private void pushBack(Node newHead){
-        Node aux = head;
+    private void pushBack(GenericNode<T> newHead){
+        GenericNode<T> aux = head;
         head = newHead;
 
         head.setNextNode(aux); //Asigna a la nueva raíz, la vieja raíz, como siguiente nodo
@@ -112,9 +123,9 @@ public class UserIntList {
     }
 
     /// POP METHODS
-    private int popFront(){
-        Node rem = getLastNode();
-        int val = rem.getVal();
+    private T popFront(){
+        GenericNode<T> rem = getLastNode();
+        T val = rem.getValue();
 
         head.setPrevNode(rem.getPrevNode()); //Asigna a la raíz, el penúltimo nodo, como anterior nodo
         rem.getPrevNode().setNextNode(head); //Asigna al penúltimo nodo, la raíz, como siguiente nodo
@@ -123,13 +134,13 @@ public class UserIntList {
         return val;
     }
 
-    private int popMiddle(){
+    private T popMiddle(){
 
-        Node aux = head;
+        GenericNode<T> aux = head;
         for (int i = 1; i <= listSize()/2 ; i++) { //Ciclo para localizar para el nodo medio
             aux = aux.getNextNode();
         }
-        int val =  aux.getVal();
+        T val =  aux.getValue();
 
         aux.getPrevNode().setNextNode(aux.getNextNode()); //Asigna al siguiente nodo del nodo anterior del nodo medio, el nodo siguiente del nodo medio, como siguiente nodo
         aux.getNextNode().setPrevNode(aux.getPrevNode()); //Asigna al nodo anterior del nodo siguiente del nodo medio, el nodo anterior al nodo medio, como anterior nodo
@@ -137,9 +148,9 @@ public class UserIntList {
         return val;
     }
 
-    private int popBack(){
-        int val = head.getVal();
-        Node aux = head;
+    private T popBack(){
+        T val = head.getValue();
+        GenericNode<T> aux = head;
 
         head = aux.getNextNode(); //Asigna al siguiente nodo de la vieja raíz, el nodo siguiente de la raíz, como nueva raíz
         aux.getPrevNode().setNextNode(head); //Asigna al anterior nodo de la vieja raíz, la nueva raíz, como siguiente nodo
@@ -160,7 +171,7 @@ public class UserIntList {
             return 0;
         else {
             int nodes = 1;
-            Node aux = head;
+            GenericNode<T> aux = head;
             while (aux.getNextNode() != head) {
                 aux = aux.getNextNode();
                 nodes++;
@@ -171,40 +182,42 @@ public class UserIntList {
 
     protected String printValues(){
 
-        int[] values = getValues();
-        if(values != null) {
-            String printValues = "< ";
+        ArrayList<T> values = getValues();
 
-            for (int i = 0; i < values.length; i++) {
-                if(i % 5 == 0 && i > 0)
-                    printValues += "\n"; //Imprime un salto de lista cada 5 valores
-                printValues = printValues.concat(String.valueOf(values[i])).concat(" ");
+        if(values != null) {
+            int i = 1;
+            String printValues = "";
+
+            for(T val : values){
+                printValues = printValues.concat("<Valor "+i+"> ").concat(String.valueOf(val).concat("\n"));
+                i++;
             }
 
-            return printValues.concat(">");
+            return printValues.trim();
         }
         return "Lista vacia!";
     }
 
     /// SEEKER METHODS
-    private Node getLastNode(){ //Conseguir el ultimo nodo de la lista
-        Node aux = head;
+    private GenericNode<T> getLastNode(){ //Conseguir el ultimo nodo de la lista
+        GenericNode<T> aux = head;
         while (aux.getNextNode() != head)
             aux = aux.getNextNode();
         return aux;
     }
 
-     private int[] getValues(){
+     private ArrayList<T> getValues(){
 
         if(head != null) {
-            int[] values = new int[listSize()]; //Crear un array del tamano de la lista
+            ArrayList<T> values = new ArrayList<>(); //Crear un array del tamano de la lista
 
-            Node aux = head;
+            GenericNode<T> aux = head;
 
-            for (int i = 0; i < values.length; i++) {
-                values[i] = aux.getVal();
+            for (int i = 0; i < listSize(); i++) {
+                values.add(aux.getValue());
                 aux = aux.getNextNode();
             }
+
             return values;
 
         } else return null; //Si la lista esta vacia regresa nulo
@@ -216,8 +229,9 @@ public class UserIntList {
         return String.format("""
                 Nombre lista: %s
                 Capacidad: %s
-                <Elementos>
-                %s""", listName,
+                -- Elementos --
+                %s
+                ---------------""", listName,
                 maxSize != -1 ? maxSize : "Infinito!",
                 printValues());
     }

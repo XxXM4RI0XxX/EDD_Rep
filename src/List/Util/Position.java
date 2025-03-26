@@ -1,6 +1,6 @@
 package List.Util;
 
-import Util.ConsoleReader;
+import Util.RandomGenerator;
 
 public enum Position {
     //Posicion a insertar
@@ -10,7 +10,7 @@ public enum Position {
     RANDOM;
 
     public Position getRandom(){
-        int r = ConsoleReader.genRandomInt(1,4);
+        int r = RandomGenerator.genRandomInt(1,4);
 
         if(r == 1) return FRONT;
         if(r == 2) return BACK;

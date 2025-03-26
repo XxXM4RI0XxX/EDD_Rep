@@ -6,24 +6,7 @@ import java.util.Scanner;
 
 public class ConsoleReader {
 
-    private static final Random r = new Random();
     private static final Scanner q = new Scanner(System.in);
-
-    public static int genRandomInt(){
-        return r.nextInt();
-    }
-    public static int genRandomInt(int origin, int bound){
-        return r.nextInt(origin,bound);
-    }
-    public static double genRandomDecimal(){
-        return r.nextDouble();
-    }
-    public static double genRandomDecimal(double origin, double bound){
-        return r.nextDouble(origin,bound);
-    }
-    public static char genRandomLowerCaseLetter(){ return (char) r.nextInt(97,123); }
-    public static char genRandomUpperCaseLetter(){ return (char) r.nextInt(65,91);}
-    public static boolean genRandomBoolean(){ return r.nextBoolean(); }
 
     public static boolean readBoolean(Integer bool){ // 0 False ~ 1 True
         return bool==1;

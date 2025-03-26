@@ -1,21 +1,21 @@
-package List.Objects;
+package List.Objects.IntList;
 
-public class Node {
+public class IntNode {
     private final Integer val;
-    private Node nextNode;
-    private Node prevNode;
+    private IntNode nextNode;
+    private IntNode prevNode;
 
-    public Node(Integer val){
+    public IntNode(Integer val){
         this.val = val;
         nextNode = null;
         prevNode = null;
     }
 
     //SETTERS
-    public void setNextNode(Node nextNode) {
+    public void setNextNode(IntNode nextNode) {
         this.nextNode = nextNode;
     }
-    public void setPrevNode(Node prevNode) {
+    public void setPrevNode(IntNode prevNode) {
         this.prevNode = prevNode;
     }
 
@@ -23,10 +23,10 @@ public class Node {
     public Integer getVal() {
         return val;
     }
-    public Node getNextNode() {
+    public IntNode getNextNode() {
         return nextNode;
     }
-    public Node getPrevNode() {
+    public IntNode getPrevNode() {
         return prevNode;
     }
 }
