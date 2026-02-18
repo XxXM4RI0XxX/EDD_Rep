@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EDDRep.iml" filepath="$PROJECT_DIR$/EDDRep.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyUtility/MyUtility.iml" filepath="$PROJECT_DIR$/MyUtility/MyUtility.iml" />
     </modules>
   </component>
 </project>

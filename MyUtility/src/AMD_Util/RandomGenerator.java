@@ -1,4 +1,4 @@
-package Util;
+package AMD_Util;
 
 import java.util.Random;
 

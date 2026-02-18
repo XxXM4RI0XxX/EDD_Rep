@@ -5,6 +5,7 @@ import List.Objects.GeneralList.UserGenericList;
 import List.Util.Position;
 import Util.RandomGenerator;
 import Util.RandomObject;
+import Util.RandomPerson;
 
 public class Main {
 
@@ -38,9 +39,9 @@ public class Main {
 //        list.push(new GenericNode<>(25),Position.RANDOM);
 //        list.push(new GenericNode<>(true),Position.RANDOM);
 
-        RandomObject obj = RandomGenerator.genRandomObject();
+        RandomPerson juan = new RandomPerson("Juan","",-1,-1,null,null,100);
 
-        System.out.println(obj);
+        System.out.println(juan);
 
     }
 }
